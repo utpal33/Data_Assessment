@@ -1,0 +1,80 @@
+Dataset Summary : - this dataset has contact information, about the companies situated in the US, of organisation that Novel Office want to contact to lease buildings to businesses. 
+
+
+COLUMN DESCRIPTION :
+
+        01.>  Company Name :  represents the name of the organisation, most of the data it has unique.
+
+        02.>  Website :  Official website oh the company, have to be unique. Useful in further research while connecting with them.
+
+        03.>  Company HQ Phone : Organisation registerd pone number to contact. essential for contacting.
+
+        04.>  Last Name : last name of primary person of the organisation.
+
+        05.>  First Name : last name of primary person of the organisation.
+
+        06.>  Middle Name : Middle name of primary person of the organisation.
+
+        07.>  Saluation : Titles used for addressing the person. (mr, mrs). 
+
+        08.>  Job Title : postion of the Contact Person at the organisation.
+
+        09.>  Direct Phone Number : number to direct contact with the main person for business deal.
+
+        10.>  Mobile Number : Personal mobile number of the person.
+
+        11.>  Business Email : primary Email for business
+
+        12.>  Suplemental Email : 
+
+        13.>  LinkedIn Profile Url : linkDin profile url of business
+
+        14.>  Person Street : street Address of Person
+
+        15.>  Person City : city of Person
+
+        16.>  Person State : State of Person
+
+        17.>  Person Zip Code : Zip code 
+
+        18.>  Country : Country name
+
+Additional Information : most of the column has unique data except First Name, Last Name, Middle Name, Country, Person State, Person Street, Saluation and Job Title. 
+
+Assessing the Data : 
+
+1 : Manuall Assesment ( looking at data thoroughly) 
+2 : Automatic Assessment of the data : using methodss like (head(), sample(), info(), describe(), shape(), isnull(), duplicate(), isnull().sum())
+
+
+Issue with Data : 
+    Found in Manuall Assessment :
+        1.> 'row number 12' has no data (all fields are empty)
+        2.> The 'Person Zip Code' column contained a mix of 5-digit ZIP codes and extended ZIP+4 codes in the format 12345-2345. 
+        3.> most of the 'Job Title' column entries have Title with descriptors. might cause inconsistency while filtering or analysing the data according to the job Title
+        4.> 'LinkdIn Profile Url' column has Missing values
+        5.> 'company HQ Phone', 'Direct Phone Number' and 'Mobile Phone' has some entries not in US NUmber Format (XXX)YYY-ZZZZ. migh cause problem while searching particular data
+
+    Found in Automatic Assessment :
+        06.> all phone number columns has some row with more than 10 number or have number in non-US base formating number
+        07.> 'Mobile phone' column has some 'null' values
+        08.> 'Direct phone Number' column has differnt format. eg. '1234567890 ext. 1234' instead of us base format (xxx) yyy-zzzz
+        09.> duplicate rows of 3 business 
+
+Handeling Issue : 
+        01.> drop the row with df.drop(how='all') - it deleted the row in which all column is empty
+        02.> iterate over column with apply() then split the data with '-' the take 0th index value
+        03.> iterate over column with apply() then split with comma(,) as it has job title before comma, and take the 0th indexed value.
+        04.> filled with 'not filled' value as its a unique value for each business
+        05.> 1st approach :- replaced with empty string to merge all the values in one column. (did in this approach)
+             2nd approach :- replace with np.nan value and then can be filled values with fillna(method='bfill'/'ffill')
+        06 & 07.> as 'null' values are not redable as nan so reo=place null with '' to merge all Number and Email inone column
+        08.> split with ext then took 0th value to extract the number
+        09.> drop those rows which has same website name using drop method
+                # chose this Website column to remove duplicate data as it has the least missing values and each busiiness must have unique website.
+
+
+
+## In Dataset you might find some duplicate Records but they are actully marked as 'not filled' because the uniquness of the data. 
+## as most of the columns have unique values so it migh mbe inappropriate to filled with statistical measures like mean, median, mode.
+## it harm the business while connecting with them.
